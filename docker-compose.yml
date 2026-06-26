@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: traffic_db
+    environment:
+      POSTGRES_DB: traffic_mgmt
+      POSTGRES_USER: traffic_admin
+      POSTGRES_PASSWORD: securepass123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U traffic_admin -d traffic_mgmt"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - traffic_network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: traffic_backend
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://traffic_admin:securepass123@db:5432/traffic_mgmt
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+      - ./evidence:/app/evidence
+      - ./models:/app/models
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - traffic_network
+
+  # AI Processing Service
+  ai_service:
+    build:
+      context: ./ai_service
+      dockerfile: Dockerfile
+    container_name: traffic_ai
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://traffic_admin:securepass123@db:5432/traffic_mgmt
+    volumes:
+      - ./ai_service:/app
+      - ./uploads:/app/uploads
+      - ./evidence:/app/evidence
+      - ./models:/app/models
+    depends_on:
+      - backend
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - traffic_network
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: traffic_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - traffic_network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: traffic_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - traffic_network
+
+volumes:
+  postgres_data:
+
+networks:
+  traffic_network:
+    driver: bridge

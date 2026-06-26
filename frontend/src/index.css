@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.5);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.8);
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-surface-800/50 backdrop-blur-lg border border-surface-700/50 rounded-2xl;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:border-primary-500/30 hover:shadow-glow;
+  }
+
+  .stat-card {
+    @apply glass-card p-6 relative overflow-hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-1 rounded-t-2xl;
+  }
+
+  .stat-card-primary::before {
+    @apply bg-gradient-to-r from-primary-500 to-primary-400;
+  }
+
+  .stat-card-success::before {
+    background: linear-gradient(to right, #10b981, #34d399);
+  }
+
+  .stat-card-warning::before {
+    background: linear-gradient(to right, #f59e0b, #fbbf24);
+  }
+
+  .stat-card-danger::before {
+    background: linear-gradient(to right, #ef4444, #f87171);
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white px-6 py-2.5 rounded-xl font-medium 
+           transition-all duration-300 hover:shadow-glow hover:from-primary-500 hover:to-primary-400
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-700/80 text-surface-200 px-6 py-2.5 rounded-xl font-medium border border-surface-600/50
+           transition-all duration-300 hover:bg-surface-600/80 hover:border-surface-500/50
+           active:scale-95;
+  }
+
+  .btn-danger {
+    @apply bg-gradient-to-r from-red-600 to-red-500 text-white px-6 py-2.5 rounded-xl font-medium
+           transition-all duration-300 hover:shadow-glow-danger active:scale-95;
+  }
+
+  .input-field {
+    @apply w-full bg-surface-800/80 border border-surface-600/50 rounded-xl px-4 py-3 text-white
+           placeholder-surface-400 focus:outline-none focus:border-primary-500/50 focus:ring-2 
+           focus:ring-primary-500/20 transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-500/20 text-emerald-400 border border-emerald-500/30;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-500/20 text-amber-400 border border-amber-500/30;
+  }
+
+  .badge-danger {
+    @apply badge bg-red-500/20 text-red-400 border border-red-500/30;
+  }
+
+  .badge-info {
+    @apply badge bg-blue-500/20 text-blue-400 border border-blue-500/30;
+  }
+
+  .table-row {
+    @apply border-b border-surface-700/50 hover:bg-surface-800/50 transition-colors duration-150;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-surface-300
+           transition-all duration-200 hover:bg-surface-800/80 hover:text-white;
+  }
+
+  .nav-link-active {
+    @apply nav-link bg-primary-500/10 text-primary-400 border border-primary-500/20;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold bg-gradient-to-r from-white to-surface-300 bg-clip-text text-transparent;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-white mb-4;
+  }
+
+  .pulse-dot {
+    @apply w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-400 to-primary-300 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-warm {
+    @apply bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent;
+  }
+}
