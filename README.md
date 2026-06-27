@@ -9,6 +9,9 @@
 
 > An intelligent, AI-powered traffic control and enforcement system that uses computer vision for real-time vehicle detection, traffic density analysis, violation detection, automatic number plate recognition, and automated E-Challan generation.
 
+## 📺 Demo Video
+<video src="./Demo Video-AI-Driven Smart Traffic Management and Automation Violation Detection with E-Challan System.mp4" controls width="100%"></video>
+
 ---
 
 ## 📋 Table of Contents
