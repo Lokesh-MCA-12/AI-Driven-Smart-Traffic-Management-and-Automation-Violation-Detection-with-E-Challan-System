@@ -10,7 +10,7 @@
 > An intelligent, AI-powered traffic control and enforcement system that uses computer vision for real-time vehicle detection, traffic density analysis, violation detection, automatic number plate recognition, and automated E-Challan generation.
 
 ## 📺 Demo Video
-<video src="https://github.com/Lokesh-MCA-12/AI-Driven-Smart-Traffic-Management-and-Automation-Violation-Detection-with-E-Challan-System/raw/main/Demo%20Video-AI-Driven%20Smart%20Traffic%20Management%20and%20Automation%20Violation%20Detection%20with%20E-Challan%20System.mp4" controls width="100%"></video>
+[![Watch the Demo Video](https://img.youtube.com/vi/b8c1UhwonZU/maxresdefault.jpg)](https://youtu.be/b8c1UhwonZU)
 
 ---
 
